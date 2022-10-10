@@ -9,6 +9,9 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import praktikum.pages.MainPage;
 import praktikum.pages.OrderPage;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 
 public class OrderTest {
 //    private static ChromeDriver driver;
@@ -20,15 +23,13 @@ public class OrderTest {
 //        driver = new ChromeDriver();
         WebDriverManager.firefoxdriver().setup();
         driver = new FirefoxDriver();
+        driver.get("https://qa-scooter.praktikum-services.ru/");
+        driver.manage().window().maximize();
     }
 
     @Test
     //Test 1
     public void checkOrderCreation1() {
-
-        //Переход на страницу тестового приложения
-        driver.get("https://qa-scooter.praktikum-services.ru/");
-        driver.manage().window().maximize();
 
         //Нажать кнопку «Заказать»
         MainPage mainPage = new MainPage(driver);
@@ -54,15 +55,13 @@ public class OrderTest {
 
         //Проверить, что появилось всплывающее окно с сообщением об успешном создании заказа
         orderPage.waitForOrderCreated();
+        String actualString = orderPage.getOrderCreatedText();
+        assertTrue(actualString.contains("Заказ оформлен"));
     }
 
     @Test
     //Test 2
     public void checkOrderCreation2() {
-
-        //Переход на страницу тестового приложения
-        driver.get("https://qa-scooter.praktikum-services.ru/");
-        driver.manage().window().maximize();
 
         //Нажать кнопку «Заказать»
         MainPage mainPage = new MainPage(driver);
@@ -86,7 +85,8 @@ public class OrderTest {
         orderPage.clickOrderButtonYes();
 
         //Проверить, что появилось всплывающее окно с сообщением об успешном создании заказа
-        orderPage.waitForOrderCreated();
+        String actualString = orderPage.getOrderCreatedText();
+        assertTrue(actualString.contains("Заказ оформлен"));
     }
 
     @After

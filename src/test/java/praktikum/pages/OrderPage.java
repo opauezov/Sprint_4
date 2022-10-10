@@ -104,6 +104,9 @@ public class OrderPage {
         new WebDriverWait(driver, Duration.ofSeconds(3))
                 .until(ExpectedConditions.visibilityOfElementLocated(orderCreated));
     }
-
+    public String getOrderCreatedText() {
+        String text = driver.findElement(orderCreated).getText();
+        return text;
+    }
 
 }
