@@ -1,34 +1,18 @@
 package praktikum;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.After;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import praktikum.pages.MainPage;
 import praktikum.pages.OrderPage;
+import praktikum.settings.BaseTest;
+
+import static org.junit.Assert.assertTrue;
 
 
-public class OrderTest {
-//    private static ChromeDriver driver;
-    private static FirefoxDriver driver;
-
-    @BeforeClass
-    public static void setupClass() {
-//        WebDriverManager.chromedriver().setup();
-//        driver = new ChromeDriver();
-        WebDriverManager.firefoxdriver().setup();
-        driver = new FirefoxDriver();
-    }
+public class OrderTest extends BaseTest {
 
     @Test
     //Test 1
     public void checkOrderCreation1() {
-
-        //Переход на страницу тестового приложения
-        driver.get("https://qa-scooter.praktikum-services.ru/");
-        driver.manage().window().maximize();
 
         //Нажать кнопку «Заказать»
         MainPage mainPage = new MainPage(driver);
@@ -54,15 +38,13 @@ public class OrderTest {
 
         //Проверить, что появилось всплывающее окно с сообщением об успешном создании заказа
         orderPage.waitForOrderCreated();
+        String actualString = orderPage.getOrderCreatedText();
+        assertTrue(actualString.contains("Заказ оформлен"));
     }
 
     @Test
     //Test 2
     public void checkOrderCreation2() {
-
-        //Переход на страницу тестового приложения
-        driver.get("https://qa-scooter.praktikum-services.ru/");
-        driver.manage().window().maximize();
 
         //Нажать кнопку «Заказать»
         MainPage mainPage = new MainPage(driver);
@@ -86,12 +68,8 @@ public class OrderTest {
         orderPage.clickOrderButtonYes();
 
         //Проверить, что появилось всплывающее окно с сообщением об успешном создании заказа
-        orderPage.waitForOrderCreated();
+        String actualString = orderPage.getOrderCreatedText();
+        assertTrue(actualString.contains("Заказ оформлен"));
     }
 
-    @After
-    public void tearDown() {
-        // Закрой браузер
-        driver.quit();
-    }
 }
