@@ -1,31 +1,14 @@
 package praktikum;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.hamcrest.MatcherAssert;
-import org.junit.After;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import praktikum.pages.MainPage;
+import praktikum.settings.BaseTest;
 
 import static org.hamcrest.CoreMatchers.containsString;
 
 
-public class QuestionsTest {
-    //    private static ChromeDriver driver;
-    private static FirefoxDriver driver;
-
-    @BeforeClass
-    public static void setupClass() {
-//        WebDriverManager.chromedriver().setup();
-//        driver = new ChromeDriver();
-        WebDriverManager.firefoxdriver().setup();
-        driver = new FirefoxDriver();
-        //Переход на страницу тестового приложения
-        driver.get("https://qa-scooter.praktikum-services.ru/");
-        driver.manage().window().maximize();
-    }
+public class QuestionsTest extends BaseTest {
 
     @Test
     public void shouldOpenAndCheckTextForOneQuestion() {
@@ -107,9 +90,4 @@ public class QuestionsTest {
         MatcherAssert.assertThat("Текст не соответсвует ожидаемому результату", actual, containsString(expected));
     }
 
-    @After
-    public void tearDown() {
-        // Закрой браузер
-        driver.quit();
-    }
 }

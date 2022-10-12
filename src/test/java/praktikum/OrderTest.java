@@ -1,31 +1,14 @@
 package praktikum;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.After;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import praktikum.pages.MainPage;
 import praktikum.pages.OrderPage;
+import praktikum.settings.BaseTest;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 
-public class OrderTest {
-//    private static ChromeDriver driver;
-    private static FirefoxDriver driver;
-
-    @BeforeClass
-    public static void setupClass() {
-//        WebDriverManager.chromedriver().setup();
-//        driver = new ChromeDriver();
-        WebDriverManager.firefoxdriver().setup();
-        driver = new FirefoxDriver();
-        driver.get("https://qa-scooter.praktikum-services.ru/");
-        driver.manage().window().maximize();
-    }
+public class OrderTest extends BaseTest {
 
     @Test
     //Test 1
@@ -89,9 +72,4 @@ public class OrderTest {
         assertTrue(actualString.contains("Заказ оформлен"));
     }
 
-    @After
-    public void tearDown() {
-        // Закрой браузер
-        driver.quit();
-    }
 }
